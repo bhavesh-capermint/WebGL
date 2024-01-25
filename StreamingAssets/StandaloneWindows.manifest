@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 1038250776
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: carrace
+      Dependencies: {}
+    Info_1:
+      Name: luckynumber
+      Dependencies: {}
+    Info_2:
+      Name: teenpatti
+      Dependencies: {}
