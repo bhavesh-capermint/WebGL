@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Photon Fusion Demo</title>
+    <title>Unity WebGL Player | Little Fighter</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
   </head>
-  <body bgcolor="black">
+  <body>
     <div id="unity-container">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -57,15 +57,15 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Photon Fusion Demo.loader.js";
+      var loaderUrl = buildUrl + "/Little Fighter.loader.js";
       var config = {
-        dataUrl: buildUrl + "/Photon Fusion Demo.data.unityweb",
-        frameworkUrl: buildUrl + "/Photon Fusion Demo.framework.js.unityweb",
-        codeUrl: buildUrl + "/Photon Fusion Demo.wasm.unityweb",
+        dataUrl: buildUrl + "/Little Fighter.data.unityweb",
+        frameworkUrl: buildUrl + "/Little Fighter.framework.js.unityweb",
+        codeUrl: buildUrl + "/Little Fighter.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "CTPL",
-        productName: "Photon Fusion Demo",
-        productVersion: "0.1",
+        productName: "Little Fighter",
+        productVersion: "1.0",
         showBanner: unityShowBanner,
       };
 

@@ -1,9 +1,9 @@
-const cacheName = "CTPL-Photon Fusion Demo-0.1";
+const cacheName = "CTPL-Little Fighter-1.0";
 const contentToCache = [
-    "Build/Photon Fusion Demo.loader.js",
-    "Build/Photon Fusion Demo.framework.js.unityweb",
-    "Build/Photon Fusion Demo.data.unityweb",
-    "Build/Photon Fusion Demo.wasm.unityweb",
+    "Build/Little Fighter.loader.js",
+    "Build/Little Fighter.framework.js.unityweb",
+    "Build/Little Fighter.data.unityweb",
+    "Build/Little Fighter.wasm.unityweb",
     "TemplateData/style.css"
 
 ];

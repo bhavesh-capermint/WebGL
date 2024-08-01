@@ -1,6 +1,6 @@
 {
-    "name": "Photon Fusion Demo",
-    "short_name": "Photon Fusion Demo",
+    "name": "Little Fighter",
+    "short_name": "Little Fighter",
     "start_url": "index.html",
     "display": "fullscreen",
     "background_color": "#231F20",
