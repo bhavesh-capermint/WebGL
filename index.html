@@ -19,26 +19,6 @@
       </div>
       <div id="unity-warning"> </div>
     </div>
-
-    <script>
-      function copyTextToClipboard(text) {
-          // Create a temporary input element
-          var textArea = document.createElement("textarea");
-          textArea.value = text;
-          document.body.appendChild(textArea);
-          
-          // Select and copy the text
-          textArea.select();
-          document.execCommand("copy");
-          
-          // Remove the temporary input element
-          document.body.removeChild(textArea);
-          
-          console.log("Text copied to clipboard: " + text);
-      }
-      </script>
-      
-
     <script>
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
