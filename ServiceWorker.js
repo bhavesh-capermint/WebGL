@@ -1,9 +1,9 @@
 const cacheName = "CTPL-Little Fighter-1.0";
 const contentToCache = [
-    "Build/Little Fighter.loader.js",
-    "Build/Little Fighter.framework.js.unityweb",
-    "Build/Little Fighter.data.unityweb",
-    "Build/Little Fighter.wasm.unityweb",
+    "Build/Build.loader.js",
+    "Build/Build.framework.js.unityweb",
+    "Build/Build.data.unityweb",
+    "Build/Build.wasm.unityweb",
     "TemplateData/style.css"
 
 ];
