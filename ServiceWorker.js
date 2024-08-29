@@ -1,9 +1,9 @@
-const cacheName = "CTPL-Little Fighter-1.0";
+const cacheName = "DefaultCompany-Test_Control-1.0";
 const contentToCache = [
-    "Build/Little Fighter.loader.js",
-    "Build/Little Fighter.framework.js.unityweb",
-    "Build/Little Fighter.data.unityweb",
-    "Build/Little Fighter.wasm.unityweb",
+    "Build/TestControl.loader.js",
+    "Build/TestControl.framework.js.unityweb",
+    "Build/TestControl.data.unityweb",
+    "Build/TestControl.wasm.unityweb",
     "TemplateData/style.css"
 
 ];

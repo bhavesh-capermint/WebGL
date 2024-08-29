@@ -1,6 +1,6 @@
 {
-    "name": "Little Fighter",
-    "short_name": "Little Fighter",
+    "name": "Test_Control",
+    "short_name": "Test_Control",
     "start_url": "index.html",
     "display": "fullscreen",
     "background_color": "#231F20",
