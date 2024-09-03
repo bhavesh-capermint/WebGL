@@ -9,8 +9,8 @@
     <canvas id="unity-canvas" width=1280 height=720 tabindex="-1" style="width: 1280px; height: 720px; background: #231F20; border: none; outline: none;"></canvas>
     <script src="Build/Little Fighter.loader.js"></script>
     <script>
-      
-      function handlePageRefresh() {
+
+     function handlePageRefresh() {
         if (!sessionStorage.getItem('refreshed')) {
           sessionStorage.setItem('refreshed', 'true');
 
@@ -24,6 +24,20 @@
       }
 
       handlePageRefresh();
+
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+
+        var authResponse = googleUser.getAuthResponse();
+        var idToken = authResponse.id_token;
+
+        // Send idToken to the server for verification if needed
+        console.log('ID Token: ' + idToken);
+      }
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -50,7 +64,9 @@
         productVersion: "1.0",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+        //5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com
       });
     </script>
+    <meta name="google-signin-client_id" content="5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com">
   </body>
 </html>
