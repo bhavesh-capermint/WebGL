@@ -1,72 +1,105 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Little Fighter</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;display: grid; place-items: center; background: black; height: 100vh;">
-    <canvas id="unity-canvas" width=1280 height=720 tabindex="-1" style="width: 1280px; height: 720px; background: #231F20; border: none; outline: none;"></canvas>
-    <script src="Build/Little Fighter.loader.js"></script>
-    <script>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | Little Fighter</title>
+</head>
+<body style="text-align: center; padding: 0; border: 0; margin: 0; display: grid; place-items: center; background: black; height: 100vh;">
+  <canvas id="unity-canvas" width=1280 height=720 tabindex="-1" style="width: 1280px; height: 720px; background: #231F20; border: none; outline: none;"></canvas>
 
-     function handlePageRefresh() {
-        if (!sessionStorage.getItem('refreshed')) {
-          sessionStorage.setItem('refreshed', 'true');
+  <!-- Load Google Sign-In API -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-          setTimeout(() => {
-            location.reload(true);
-          }, 1000);
-
-        } else {
-          sessionStorage.removeItem('refreshed');
-        }
-      }
-
-      handlePageRefresh();
-
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-
-        var authResponse = googleUser.getAuthResponse();
-        var idToken = authResponse.id_token;
-
-        // Send idToken to the server for verification if needed
-        console.log('ID Token: ' + idToken);
-      }
-
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
-
-        document.body.style.textAlign = "left";
-      }
-
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/Little Fighter.data.unityweb",
-        frameworkUrl: "Build/Little Fighter.framework.js.unityweb",
-        codeUrl: "Build/Little Fighter.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "CTPL",
-        productName: "Little Fighter",
-        productVersion: "1.0",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-        //5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com
+  <script>
+    // Define Google Sign-In functions
+    function triggerSignIn() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signIn().then(function(googleUser) {
+        onSignIn(googleUser);
       });
-    </script>
-    <meta name="google-signin-client_id" content="5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com">
-  </body>
+    }
+
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function() {
+        if (typeof unityInstance !== 'undefined') {
+          unityInstance.SendMessage('GameManager', 'OnSignOut');
+        }
+      });
+    }
+
+    function onSignIn(googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      SendTokenToUnity(id_token);
+    }
+
+    function SendTokenToUnity(token) {
+      if (typeof unityInstance !== 'undefined') {
+        unityInstance.SendMessage('GameManager', 'ReceiveToken', token);
+      }
+    }
+
+    function initGoogleSignIn() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init({
+          client_id: '938562901864-5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com'
+        }).then(function() {
+          // Initialization complete
+        });
+      });
+    }
+
+    // Initialize Google Sign-In on window load
+    window.onload = initGoogleSignIn;
+  </script>
+
+  <!-- Load Unity WebGL Build -->
+  <script src="Build/Little Fighter.loader.js"></script>
+
+  <script>
+    function handlePageRefresh() {
+      if (!sessionStorage.getItem('refreshed')) {
+        sessionStorage.setItem('refreshed', 'true');
+
+        setTimeout(() => {
+          location.reload(true);
+        }, 1000);
+
+      } else {
+        sessionStorage.removeItem('refreshed');
+      }
+    }
+
+    handlePageRefresh();
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      // Mobile device style
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+
+      var canvas = document.querySelector("#unity-canvas");
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.position = "fixed";
+
+      document.body.style.textAlign = "left";
+    }
+
+    // Create Unity instance
+    var unityInstance = createUnityInstance(document.querySelector("#unity-canvas"), {
+      dataUrl: "Build/Little Fighter.data.unityweb",
+      frameworkUrl: "Build/Little Fighter.framework.js.unityweb",
+      codeUrl: "Build/Little Fighter.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "CTPL",
+      productName: "Little Fighter",
+      productVersion: "1.0",
+      // matchWebGLToCanvasSize: false,
+      // devicePixelRatio: 1,
+    });
+  </script>
+</body>
 </html>
