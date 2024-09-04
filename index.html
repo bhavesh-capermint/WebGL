@@ -28,6 +28,8 @@
         if (typeof unityInstance !== 'undefined') {
           unityInstance.SendMessage('GameManager', 'OnSignOut');
         }
+      }).catch(function(error) {
+          console.log("Signuout Error ", error);
       });
     }
 
