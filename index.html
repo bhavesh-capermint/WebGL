@@ -7,58 +7,6 @@
 </head>
 <body style="text-align: center; padding: 0; border: 0; margin: 0; display: grid; place-items: center; background: black; height: 100vh;">
   <canvas id="unity-canvas" width=1280 height=720 tabindex="-1" style="width: 1280px; height: 720px; background: #231F20; border: none; outline: none;"></canvas>
-
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-
-  <script>
-
-    function triggerSignIn() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signIn().then(function(googleUser) {
-        onSignIn(googleUser);
-      });
-    }
-
-    function signOut() {
-        console.log("signOut");
-      var auth2 = gapi.auth2.getAuthInstance();
-      console.log("auth2:- ", auth2);
-      auth2.signOut().then(function() {
-          console.log("unityInstance ", (typeof unityInstance !== 'undefined'));
-        if (typeof unityInstance !== 'undefined') {
-          unityInstance.SendMessage('GameManager', 'OnSignOut');
-        }
-      }).catch(function(error) {
-          console.log("Signuout Error ", error);
-      });
-    }
-
-    function onSignIn(googleUser) {
-      var id_token = googleUser.getAuthResponse().id_token;
-      SendTokenToUnity(id_token);
-    }
-
-    function SendTokenToUnity(token) {
-      console.log("SendTokenToUnity unityInstance ", (typeof unityInstance !== 'undefined'));
-      if (typeof unityInstance !== 'undefined') {
-        unityInstance.SendMessage('GameManager', 'ReceiveToken', token);
-      }
-    }
-
-    function initGoogleSignIn() {
-      gapi.load('auth2', function() {
-        gapi.auth2.init({
-          client_id: '938562901864-5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com'
-        }).then(function() {
-          
-        });
-      });
-    }
-
-    window.onload = initGoogleSignIn;
-  </script>
-
   <!-- Load Unity WebGL Build -->
   <script src="Build/Little Fighter.loader.js"></script>
 
