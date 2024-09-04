@@ -12,6 +12,20 @@
 
   <script>
 
+    let auth2Initialized = false;
+
+    function initGoogleSignIn() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init({
+          client_id: '938562901864-5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com'
+        }).then(function() {
+          auth2Initialized = true;
+        }).catch(function(error) {
+          console.error("Error initializing Google Sign-In: ", error);
+        });
+      });
+    }
+
     function triggerSignIn() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signIn().then(function(googleUser) {
@@ -19,7 +33,7 @@
       });
     }
 
-    function signOut() {
+    /*function signOut() {
         console.log("signOut");
       var auth2 = gapi.auth2.getAuthInstance();
       console.log("auth2:- ", auth2);
@@ -30,6 +44,28 @@
         }
       }).catch(function(error) {
           console.log("Signuout Error ", error);
+      });
+    }*/
+
+    function signOut() {
+      if (!auth2Initialized) {
+        console.error("Google Sign-In not initialized.");
+        return;
+      }
+
+      var auth2 = gapi.auth2.getAuthInstance();
+      if (!auth2) {
+        console.error("Google Auth2 instance not found.");
+        return;
+      }
+
+      auth2.signOut().then(function() {
+        console.log("Signed out successfully.");
+        if (typeof unityInstance !== 'undefined') {
+          unityInstance.SendMessage('GameManager', 'OnSignOut');
+        }
+      }).catch(function(error) {
+        console.error("Sign out error: ", error);
       });
     }
 
@@ -45,7 +81,7 @@
       }
     }
 
-    function initGoogleSignIn() {
+    /* function initGoogleSignIn() {
       gapi.load('auth2', function() {
         gapi.auth2.init({
           client_id: '938562901864-5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com'
@@ -53,7 +89,7 @@
           
         });
       });
-    }
+    } */
 
     window.onload = initGoogleSignIn;
   </script>
