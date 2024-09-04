@@ -8,11 +8,10 @@
 <body style="text-align: center; padding: 0; border: 0; margin: 0; display: grid; place-items: center; background: black; height: 100vh;">
   <canvas id="unity-canvas" width=1280 height=720 tabindex="-1" style="width: 1280px; height: 720px; background: #231F20; border: none; outline: none;"></canvas>
 
-  <!-- Load Google Sign-In API -->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   <script>
-    // Define Google Sign-In functions
+
     function triggerSignIn() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signIn().then(function(googleUser) {
@@ -23,6 +22,7 @@
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function() {
+          console.log("unityInstance ", (typeof unityInstance !== 'undefined'));
         if (typeof unityInstance !== 'undefined') {
           unityInstance.SendMessage('GameManager', 'OnSignOut');
         }
@@ -35,6 +35,7 @@
     }
 
     function SendTokenToUnity(token) {
+      console.log("SendTokenToUnity unityInstance ", (typeof unityInstance !== 'undefined'));
       if (typeof unityInstance !== 'undefined') {
         unityInstance.SendMessage('GameManager', 'ReceiveToken', token);
       }
@@ -45,12 +46,11 @@
         gapi.auth2.init({
           client_id: '938562901864-5micjpke4q2v285uunq6icl3dq891qmk.apps.googleusercontent.com'
         }).then(function() {
-          // Initialization complete
+          
         });
       });
     }
 
-    // Initialize Google Sign-In on window load
     window.onload = initGoogleSignIn;
   </script>
 
@@ -74,7 +74,6 @@
     handlePageRefresh();
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      // Mobile device style
       var meta = document.createElement('meta');
       meta.name = 'viewport';
       meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
